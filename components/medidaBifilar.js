@@ -40,11 +40,11 @@ function MedidasBifilar() {
                     <div className="col-12">
                         <div className="bifilarImp ms-3 px-5">
                         <form action="" className="bifilarImpForm d-flex justify-content-center">
-                            <span>Ingrese el radio del Cable</span> <input type="text" id="CBBradioCable"
+                            <span>Ingrese el radio del Cable [m]</span> <input type="number" id="CBBradioCable"
                                 onChange={valorRadioCable} />
-                            <span className="mt-3">Ingrese la permitividad</span> <input type="text"
+                            <span className="mt-3">Ingrese la permitividad relativa</span> <input type="number"
                                 id="CBBdistanciaCables" onChange={valorPermitividad} />
-                            <span className="mt-3">Ingrese la capacitancia de la linea</span> <input type="text"
+                            <span className="mt-3">Ingrese la capacitancia de la linea</span> <input type="number"
                                 id="CBBdistanciaCables" onChange={valorCapacitancia} />
                         </form>
                         </div>
@@ -67,7 +67,6 @@ function MedidasBifilar() {
                 </div>
             </div>
         </main>
-        <footer className="mt-4">Todos los derechos reservados S.A. de C.V. R</footer>
     </div>  
     );
 }

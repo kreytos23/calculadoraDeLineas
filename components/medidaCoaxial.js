@@ -45,8 +45,8 @@ function MedidasCoaxial() {
         let radioDielectrico = (parseRadioCond)*(Math.pow(Math.E, (2*Math.PI*parsePermitividad*permitividadDelVacio)/parseCapacitancia));
         let radioExterno = math.sqrt((1/((parseResistividad*parseConductividadConductor*Math.PI) - (1/parseRadioCond**2))) + radioDielectrico**2);
         
-        setResRadioDielectrico(radioDielectrico);
-        setResRadioExterno(radioExterno)
+        setResRadioDielectrico(radioDielectrico.toFixed(3));
+        setResRadioExterno(radioExterno.toFixed(3))
     }
 
     return (
@@ -58,15 +58,15 @@ function MedidasCoaxial() {
                     <div className="col-12">
                         <div className="bifilarImp ms-3 px-5">
                         <form action="" className="bifilarImpForm d-flex justify-content-center">
-                            <span>Ingrese el radio del conductor interno</span> <input type="text" id="CBBradioCable"
+                            <span>Ingrese el radio del conductor interno [m]</span> <input type="number" id="CBBradioCable"
                                 onChange={valorRadioCond} />
-                            <span className="mt-3">Ingrese la permitividad</span> <input type="text"
+                            <span className="mt-3">Ingrese la permitividad relatividad</span> <input type="number"
                                 id="CBBdistanciaCables" onChange={valorPermitividad} />
-                            <span className="mt-3">Ingrese la capacitancia de la linea</span> <input type="text"
+                            <span className="mt-3">Ingrese la capacitancia de la linea</span> <input type="number"
                                 id="CBBdistanciaCables" onChange={valorCapacitancia} />
-                            <span className="mt-3">Ingrese la resistividad de la linea</span> <input type="text"
+                            <span className="mt-3">Ingrese la resistividad de la linea</span> <input type="number"
                                 id="CBBdistanciaCables" onChange={valorResistividad} />
-                            <span className="mt-3">Ingrese la conductividad del conductor</span> <input type="text"
+                            <span className="mt-3">Ingrese la conductividad del conductor [S/m]</span> <input type="number"
                                 id="CBBdistanciaCables" onChange={valorConductividad} />
                         </form>
                         </div>
@@ -89,7 +89,6 @@ function MedidasCoaxial() {
                 </div>
             </div>
         </main>
-        <footer className="mt-4">Todos los derechos reservados S.A. de C.V. R</footer>
     </div>  
     );
 }

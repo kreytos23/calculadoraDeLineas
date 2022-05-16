@@ -1,7 +1,7 @@
 export const dielectricos = [
     {
         nombre: "Vidrio",
-        valores: ["1e-9", "4", ""]
+        valores: ["1e-9", "4", "1.0000004"]
     },
     {
         nombre: "Aire",
@@ -13,22 +13,22 @@ export const dielectricos = [
     },
     {
         nombre: "Cuarzo",
-        valores: ["1.33e-18", "3.8", ""]
+        valores: ["1.33e-18", "3.8", "1.0000004"]
     },
     {
         nombre: "Nylon",
-        valores: ["", "3.5", ""]
+        valores: ["25.145e-11", "3.5", "1.0000004"]
     },
     {
         nombre: "Poliestireno",
-        valores: ["","2.56", ""]
+        valores: ["25.145e-11","2.56", "1.0000004"]
     },
     {
         nombre: "Porcelana",
-        valores: ["", "6", ""]
+        valores: ["25.145e-11", "6", "1.0000004"]
     },
     {
         nombre: "Polipropileno",
-        valores: ["", "2.25", ""]
+        valores: ["25.145e-11", "2.25", "1.0000004"]
     },
 ]

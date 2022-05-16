@@ -34,7 +34,7 @@ function MedidasCinta() {
             let Bop = (377 * Math.PI)/(2*parseImpedancia*math.sqrt(parsePermitividad));
             resultado = (2/Math.PI)*(Bop - 1 - math.log((2*Bop) - 1) + (((parsePermitividad  - 1)/(2*parsePermitividad))*(math.log(Bop - 1) + 0.39 - (0.61/parsePermitividad))));        
         }
-        setResMedidaCinta(resultado);
+        setResMedidaCinta(resultado.toFixed(3));
     }
 
     return (
@@ -76,7 +76,6 @@ function MedidasCinta() {
                 </div>
             </div>
         </main>
-        <footer className="mt-4">Todos los derechos reservados S.A. de C.V. R</footer>
     </div>  
     );
 }

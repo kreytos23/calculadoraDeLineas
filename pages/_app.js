@@ -23,6 +23,7 @@ function MyApp({ Component, pageProps }) {
               <Link href="/MedidasCoaxial"><button type="button" className="btn btn-primary">Medidas Coaxial</button></Link>
               <Link href="/MedidaCinta"><button type="button" className="btn btn-primary">Medidas Microcinta</button></Link>
             </div>
+            <span className="mt-3 fst-italic fw-light text-white fs-6 text text-center">Dejar vacio los cuadros para conductividades, permitividades y permeabilidades en caso de seleccionar material</span>
           </div>
         </div>
       </header>

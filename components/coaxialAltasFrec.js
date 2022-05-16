@@ -1,78 +1,100 @@
 import {create, all} from 'mathjs'; 
 import {useState} from 'react';
+import {conductores} from './materiales/conductores'
+import {dielectricos} from './materiales/dielectricos'
 
 function CoaxialAltaFrec() {
-  const math = create(all)
-  const [radioCond1, setRadioCond1] = useState(null);
-  const [radioDiele, setRadioDiele] = useState(null);
-  const [conductividadCond, setConductividadCond] = useState(null);
-  const [conductividadDielectrico, setConductividadDielectrico] = useState(null);
-  const [permitividad, setPermitividad] = useState(null);
-  const [permeabilidad, setPermeabilidad] = useState(null);
-  const [frecuenciaOnda, setFrecuenciaOnda] = useState(null);
+    const math = create(all)
+    const permeabilidadVacio = 1.256637*Math.pow(10,-6);
+    const permitividadDelVacio = 8.8541*Math.pow(10,-12);
 
-  const [resImpCabCoax, setResImpCabCoax] = useState(null);
+    const [radioCond1, setRadioCond1] = useState(null);
+    const [radioDiele, setRadioDiele] = useState(null);
+    const [conductividadCond, setConductividadCond] = useState(null);
+    const [conductividadDielectrico, setConductividadDielectrico] = useState(null);
+    const [permitividad, setPermitividad] = useState(null);
+    const [permeabilidad, setPermeabilidad] = useState(null);
+    const [frecuenciaOnda, setFrecuenciaOnda] = useState(null);
+    const [profundidadPenetracion, setProfundidadPenetracion] = useState(null);
 
-  const valorRadioCond1 = (e) => {
-    setRadioCond1(e.target.value);
-  }
+    const [resImpCabCoax, setResImpCabCoax] = useState(null);
 
-  const valorRadioDiele = (e) => {
-    setRadioDiele(e.target.value);
-  }
+    const valorRadioCond1 = (e) => {
+        setRadioCond1(e.target.value);
+    }
 
-  const valorConductividadCond = (e) => {
-    setConductividadCond(e.target.value);
-  }
+    const valorRadioDiele = (e) => {
+        setRadioDiele(e.target.value);
+    }
 
-  const valorConductividadDielectrico = (e) => {
-    setConductividadDielectrico(e.target.value);
-  }
+    const valorConductividadCond = (e) => {
+        setConductividadCond(e.target.value);
+    }
 
-  const valorPermitividad = (e) => {
-    setPermitividad(e.target.value);
-  }
+    const valorConductividadDielectrico = (e) => {
+        setConductividadDielectrico(e.target.value);
+    }
 
-  const valorPermeabilidad = (e) => {
-    setPermeabilidad(e.target.value);
-  }
+    const valorPermitividad = (e) => {
+        setPermitividad(e.target.value);
+    }
 
-  const valorFrecuencia = (e) => {
-    setFrecuenciaOnda(e.target.value);
-  }
+    const valorPermeabilidad = (e) => {
+        setPermeabilidad(e.target.value);
+    }
 
-  let inductancia = (permeabilidad, radioCond1, radioDiel) =>{
-    let resultado = (permeabilidad / (2*Math.PI))*(math.log(radioDiel/radioCond1));
-    return resultado;
-};
+    const valorProfundidadPenetracion = (e) => {
+        setProfundidadPenetracion(e.target.value);
+    }
 
-let resistividad = (conductividadCond1, radioCond1, radioDiel) => {
-    let resultado = (1/(2 * conductividadCond1 * Math.PI * profundidadPenetracion))*((1/radioCond1) + (1/radioDiel));
-    return resultado;
-};
+    const valorFrecuencia = (e) => {
+        setFrecuenciaOnda(e.target.value);
+    }
 
-let capacitancia = (permitividad, radioDiel, radioCond1) => {
-    let resultado = (2 * Math.PI * permitividad) / (math.log(radioDiel / radioCond1));
-    return resultado;
-};
+    const setConductor = (e) => {
+        let arrayValores = e.target.value.split(",");
+        setConductividadCond(arrayValores[0]);
+    }
 
-let conductancia = (conductividadDiel, radioDiel, radioCond1) => {
-    let resultado = (2 * Math.PI * conductividadDiel) / (math.log(radioDiel / radioCond1));
-    return resultado;
-};
+    const setDielectrico = (e) => {
+        let arrayValores = e.target.value.split(",");
+        setConductividadDielectrico(arrayValores[0]);
+        setPermitividad(arrayValores[1] * permitividadDelVacio);
+        setPermeabilidad(arrayValores[2] * permeabilidadVacio);
+    }
 
-function impedancia(){
-    let inductanciaRes = inductancia(permeabilidad, radioCond1, radioDiele);
-    let resistividadRes = resistividad(conductividadCond, radioCond1, radioDiele);
-    let capacitanciaRes = capacitancia(permitividad, radioDiele, radioCond1);
-    let conductanciaRes = conductancia(conductividadDielectrico, radioDiele, radioCond1);
+    let inductancia = (permeabilidad, radioCond1, radioDiel) =>{
+        let resultado = (permeabilidad / (2*Math.PI))*(math.log(radioDiel/radioCond1));
+        return resultado;
+    };
 
-    let imwL = math.complex(resistividadRes, inductanciaRes*frecuenciaOnda);
-    let imwC = math.complex(conductanciaRes, capacitanciaRes*frecuenciaOnda);
+    let resistividad = (conductividadCond1, radioCond1, radioDiel, profundidadPenetracion) => {
+        let resultado = (1/(2 * conductividadCond1 * Math.PI * profundidadPenetracion))*((1/radioCond1) + (1/radioDiel));
+        return resultado;
+    };
 
-    let result = math.sqrt(math.divide(imwL,imwC));
-    setResImpCabCoax(result);
-  }
+    let capacitancia = (permitividad, radioDiel, radioCond1) => {
+        let resultado = (2 * Math.PI * permitividad) / (math.log(radioDiel / radioCond1));
+        return resultado;
+    };
+
+    let conductancia = (conductividadDiel, radioDiel, radioCond1) => {
+        let resultado = (2 * Math.PI * conductividadDiel) / (math.log(radioDiel / radioCond1));
+        return resultado;
+    };
+
+    function impedancia(){
+        let inductanciaRes = inductancia(permeabilidad, radioCond1, radioDiele);
+        let resistividadRes = resistividad(conductividadCond, radioCond1, radioDiele, profundidadPenetracion);
+        let capacitanciaRes = capacitancia(permitividad, radioDiele, radioCond1);
+        let conductanciaRes = conductancia(conductividadDielectrico, radioDiele, radioCond1);
+
+        let imwL = math.complex(resistividadRes, inductanciaRes*frecuenciaOnda*2*Math.PI);
+        let imwC = math.complex(conductanciaRes, capacitanciaRes*frecuenciaOnda*2*Math.PI);
+
+        let result = math.sqrt(math.divide(imwL,imwC));
+        setResImpCabCoax(`${(result.re).toFixed(3)} ${(result.im).toFixed(3)}i`);
+    }
 
   return (
     <div className="App">
@@ -83,20 +105,22 @@ function impedancia(){
                 <div className="col-12">
                     <div className="bifilarImp ms-3 px-5">
                       <form action="" className="bifilarImpForm d-flex justify-content-center">
-                        <span>Ingrese el radio del conductor 1</span> <input type="text" id="CBBradioCable"
-                            onChange={valorRadioCond1} />
-                        <span className="mt-3">Ingrese el radio del dieléctrico</span> <input type="text"
-                            id="CBBdistanciaCables" onChange={valorRadioDiele} />
-                        <span className="mt-3">Ingrese la conductividad del conductor</span> <input type="text"
-                            id="CBBconductividadCable" onChange={valorConductividadCond} />
-                        <span className="mt-3">Ingrese la conductividad del dielectrico</span> <input type="text"
-                            id="CBBconductividadDiele" onChange={valorConductividadDielectrico} />
-                        <span className="mt-3">Ingrese la permitividad</span> <input type="text" id="CBBpermitividad"
-                            onChange={valorPermitividad} />
-                        <span className="mt-3">Ingrese la permeabilidad</span> <input type="text" id="CBBpermeabilidad"
-                            onChange={valorPermeabilidad} />
-                        <span className="mt-3">Ingrese frecuencia</span> <input type="text" id="CBBfrecuencia"
-                            onChange={valorFrecuencia} />
+                        <span>Ingrese el radio del conductor [m]</span> <input type="text" id="CBBradioCable"
+                            onChange={valorRadioCond1} placeholder="122.2e-5"/>
+                        <span className="mt-3">Ingrese el radio del dieléctrico [m]</span> <input type="text"
+                            id="CBBdistanciaCables" onChange={valorRadioDiele} placeholder="122.2e-5"/>
+                        <span className="mt-3">Ingrese la conductividad del conductor [S/m]</span> <input type="text"
+                            id="CBBconductividadCable" onChange={valorConductividadCond} placeholder="122.2e-5"/>
+                        <span className="mt-3">Ingrese la conductividad del dielectrico [S/m]</span> <input type="text"
+                            id="CBBconductividadDiele" onChange={valorConductividadDielectrico} placeholder="122.2e-5"/>
+                        <span className="mt-3">Ingrese la permitividad relativa</span> <input type="text" id="CBBpermitividad"
+                            onChange={valorPermitividad} placeholder="122.2e-5"/>
+                        <span className="mt-3">Ingrese la permeabilidad relativa</span> <input type="text" id="CBBpermeabilidad"
+                            onChange={valorPermeabilidad} placeholder="122.2e-5"/>
+                         <span className="mt-3">Ingrese la profundidad de Penetración</span> <input type="text" id="CBBpenetracion"
+                                onChange={valorProfundidadPenetracion} placeholder="122.2e-5"/>
+                        <span className="mt-3">Ingrese frecuencia [Hz]</span> <input type="text" id="CBBfrecuencia"
+                            onChange={valorFrecuencia} placeholder="122.2e-5"/>
                       </form>
                     </div>
                 </div>
@@ -105,28 +129,29 @@ function impedancia(){
                 <div className="col-12">
                     <div className="container-fluid">
                         <div className="row d-flex flex-column justify-content-center">
+                            <span className="my-3 text-center">Seleccione Materiales</span>
                             <div className="col-12 d-flex flex-row justify-content-between">
-                                <select className="form-select me-4" aria-label="Default select example">
+                                <select className="form-select me-4" aria-label="Default select example" onChange={setConductor}>
                                     <option selected>Selecciona Conductor</option>
-                                    <option value="1">Hierro</option>
-                                    <option value="2">Níquel</option>
-                                    <option value="3">Latón</option>
-                                    <option value="3">Cobre</option>
-                                    <option value="3">Plata</option>
-                                    <option value="3">Aluminio</option>
-                                    <option value="3">Oro</option>
-                                    <option value="3">Zinc</option>
+                                    <option value={conductores[0].valores}>{conductores[0].nombre}</option>
+                                    <option value={conductores[1].valores}>{conductores[1].nombre}</option>
+                                    <option value={conductores[2].valores}>{conductores[2].nombre}</option>
+                                    <option value={conductores[3].valores}>{conductores[3].nombre}</option>
+                                    <option value={conductores[4].valores}>{conductores[4].nombre}</option>
+                                    <option value={conductores[5].valores}>{conductores[5].nombre}</option>
+                                    <option value={conductores[6].valores}>{conductores[6].nombre}</option>
+                                    <option value={conductores[7].valores}>{conductores[7].nombre}</option>
                                 </select>
-                                <select className="form-select" aria-label="Default select example">
+                                <select className="form-select" aria-label="Default select example" onChange={setDielectrico}>
                                     <option selected>Selecciona Dieléctrico</option>
-                                    <option value="1">Aire</option>
-                                    <option value="2">Baquelita</option>
-                                    <option value="3">Vidrio</option>
-                                    <option value="3">Nylon</option>
-                                    <option value="3">Polietileno</option>
-                                    <option value="3">Polipropileno</option>
-                                    <option value="3">Poliestireno</option>
-                                    <option value="3">Hule</option>
+                                    <option value={dielectricos[0].valores}>{dielectricos[0].nombre}</option>
+                                    <option value={dielectricos[1].valores}>{dielectricos[1].nombre}</option>
+                                    <option value={dielectricos[2].valores}>{dielectricos[2].nombre}</option>
+                                    <option value={dielectricos[3].valores}>{dielectricos[3].nombre}</option>
+                                    <option value={dielectricos[0].valores}>{dielectricos[4].nombre}</option>
+                                    <option value={dielectricos[0].valores}>{dielectricos[5].nombre}</option>
+                                    <option value={dielectricos[0].valores}>{dielectricos[6].nombre}</option>
+                                    <option value={dielectricos[0].valores}>{dielectricos[7].nombre}</option>
                                 </select>
                             </div>
                             <div className="col-12 d-flex justify-content-center my-3">
@@ -142,7 +167,6 @@ function impedancia(){
             </div>
         </div>
     </main>
-    <footer className="mt-4">Todos los derechos reservados S.A. de C.V. R</footer>
 </div>  
   );
 }

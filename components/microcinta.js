@@ -32,7 +32,7 @@ function MicroCinta() {
         }else{
             result = (120*Math.PI)/((math.sqrt(parsePermitividad))*((parseLargo/parseAncho) + 1.393 + (0.667)*(math.log((parseLargo/parseAncho)+(1.444)))));
         }
-        setResImpMicroCinta(result);
+        setResImpMicroCinta(result.toFixed(3));
     }
 
     return (
@@ -44,11 +44,11 @@ function MicroCinta() {
                     <div className="col-12">
                         <div className="bifilarImp ms-3 px-5">
                         <form action="" className="bifilarImpForm d-flex justify-content-center">
-                            <span>Ingrese el ancho de la cinta</span> <input type="text" id="CBBradioCable"
+                            <span>Ingrese el ancho de la cinta [m]</span> <input type="number" id="CBBradioCable"
                                 onChange={valorAncho} />
-                            <span className="mt-3">Ingrese el largo de la cinta</span> <input type="text"
+                            <span className="mt-3">Ingrese el largo de la cinta [m]</span> <input type="number"
                                 id="CBBdistanciaCables" onChange={valorLargo} />
-                            <span className="mt-3">Ingrese la permitividad de la cinta</span> <input type="text"
+                            <span className="mt-3">Ingrese la permitividad relativa efectiva de la cinta</span> <input type="number"
                                 id="CBBdistanciaCables" onChange={valorPermitividad} />
                         </form>
                         </div>
@@ -58,30 +58,6 @@ function MicroCinta() {
                     <div className="col-12">
                         <div className="container-fluid">
                             <div className="row d-flex flex-column justify-content-center">
-                                <div className="col-12 d-flex flex-row justify-content-between">
-                                    <select className="form-select me-4" aria-label="Default select example">
-                                        <option selected>Selecciona Conductor</option>
-                                        <option value="1">Hierro</option>
-                                        <option value="2">Níquel</option>
-                                        <option value="3">Latón</option>
-                                        <option value="3">Cobre</option>
-                                        <option value="3">Plata</option>
-                                        <option value="3">Aluminio</option>
-                                        <option value="3">Oro</option>
-                                        <option value="3">Zinc</option>
-                                    </select>
-                                    <select className="form-select" aria-label="Default select example">
-                                        <option selected>Selecciona Dieléctrico</option>
-                                        <option value="1">Aire</option>
-                                        <option value="2">Baquelita</option>
-                                        <option value="3">Vidrio</option>
-                                        <option value="3">Nylon</option>
-                                        <option value="3">Polietileno</option>
-                                        <option value="3">Polipropileno</option>
-                                        <option value="3">Poliestireno</option>
-                                        <option value="3">Hule</option>
-                                    </select>
-                                </div>
                                 <div className="col-12 d-flex justify-content-center my-3">
                                     <button type="button" className="btn btn-primary" onClick={impedancia}>Aceptar</button>
                                 </div>
@@ -95,7 +71,6 @@ function MicroCinta() {
                 </div>
             </div>
         </main>
-        <footer className="mt-4">Todos los derechos reservados S.A. de C.V. R</footer>
     </div>  
     );
 }
