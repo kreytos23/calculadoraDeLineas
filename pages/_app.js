@@ -14,7 +14,7 @@ function MyApp({ Component, pageProps }) {
           </div>
           <div className="row my-3">
             <div className="col-12 d-flex justify-content-evenly">
-              <Link href="/"><button type="button" className="btn btn-primary">Cab. Bifilar Bajas Frec</button></Link>
+              <Link href="/"><button type="button" className="btn btn-primary">Cab. Bifilar Bajas Frec.</button></Link>
               <Link href="/BifilarAltaFrec"><button type="button" className="btn btn-primary">Cab. Bifilar Altas Frec.</button></Link>
               <Link href="/CoaxialBajaFrec"><button type="button" className="btn btn-primary">Coaxial Bajas Frec.</button></Link>
               <Link href="/CoaxialAltaFrec"><button type="button" className="btn btn-primary">Coaxial Altas Frec.</button></Link>
